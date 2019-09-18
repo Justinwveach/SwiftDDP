@@ -20,7 +20,7 @@
 
 import Foundation
 
-public class AbstractCollection: NSObject, MeteorCollectionType {
+open class AbstractCollection: NSObject, MeteorCollectionType {
     
     public var name:String
     public let client = Meteor.client

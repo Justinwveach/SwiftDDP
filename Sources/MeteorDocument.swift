@@ -20,7 +20,7 @@
 
 import Foundation
 
-public class MeteorDocument: NSObject {
+open class MeteorDocument: NSObject {
     
     public var _id:String
     
