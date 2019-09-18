@@ -314,7 +314,7 @@ class UserCollection: AbstractCollection {
             //     removing the document from the contacts collection
             if error != nil {
                 self.contacts[contact._id] = nil
-                log.error("\(error!)")
+                print("\(error!)")
             }
 
         }

@@ -1,0 +1,44 @@
+PODS:
+  - CryptoSwift (0.10.0)
+  - Nimble (8.0.4)
+  - Quick (2.2.0)
+  - SwiftWebSocket (2.7.0)
+
+DEPENDENCIES:
+  - CryptoSwift
+  - Nimble (from `https://github.com/Quick/Nimble.git`)
+  - Quick (from `https://github.com/Quick/Quick.git`)
+  - SwiftWebSocket (from `https://github.com/tidwall/SwiftWebSocket.git`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - CryptoSwift
+
+EXTERNAL SOURCES:
+  Nimble:
+    :git: https://github.com/Quick/Nimble.git
+  Quick:
+    :git: https://github.com/Quick/Quick.git
+  SwiftWebSocket:
+    :git: https://github.com/tidwall/SwiftWebSocket.git
+
+CHECKOUT OPTIONS:
+  Nimble:
+    :commit: d9d679903731903d5a20b62053aae16659173716
+    :git: https://github.com/Quick/Nimble.git
+  Quick:
+    :commit: 45d46a1d039167b454c648b97c5aa1fb2193651c
+    :git: https://github.com/Quick/Quick.git
+  SwiftWebSocket:
+    :commit: 4b601c4a3469971d5afa59e38494bc9ef7d956b1
+    :git: https://github.com/tidwall/SwiftWebSocket.git
+
+SPEC CHECKSUMS:
+  CryptoSwift: 6c778d69282bed3b4e975ff97a79d074f20bb011
+  Nimble: 9e498e003e10357d5f70ce5f5f263ffd51ceccaf
+  Quick: f8fcbe94a502eefa25ad0a3b5395d1b7d75341e0
+  SwiftWebSocket: 612c9729fd503cb6b0b8b45390c788686dac306f
+
+PODFILE CHECKSUM: fd15fe86644aedcf6eac5faefed58094f6cb4563
+
+COCOAPODS: 1.5.3

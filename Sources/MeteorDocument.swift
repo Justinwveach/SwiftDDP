@@ -20,7 +20,7 @@
 
 import Foundation
 
-open class MeteorDocument: NSObject {
+public class MeteorDocument: NSObject {
     
     public var _id:String
     
@@ -36,7 +36,7 @@ open class MeteorDocument: NSObject {
         }
     }
     
-    open func update(_ fields: NSDictionary?, cleared: [String]?) {
+    public func update(_ fields: NSDictionary?, cleared: [String]?) {
         if let properties = fields {
             for (key,value) in properties  {
                 print("Key: \(key), Value: \(value)")
@@ -67,7 +67,7 @@ open class MeteorDocument: NSObject {
     /*
     This method should be public so users of this library can override it for parsing their variables in their MeteorDocument object when having structs and such in their Document.
     */
-    open func fields() -> NSDictionary {
+    public func fields() -> NSDictionary {
         let fieldsDict = NSMutableDictionary()
         let properties = propertyNames()
         

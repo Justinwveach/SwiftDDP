@@ -52,7 +52,7 @@ public struct DDPEvents {
     */
     
     internal var onWebsocketError:    (_ error:Error) -> () = {error in
-        log.error("websocket error \(error)")
+        print("websocket error \(error)")
         NotificationCenter.default.post(name: Notification.Name(rawValue: DDP_WEBSOCKET_ERROR), object: nil)
     }
     
@@ -62,15 +62,15 @@ public struct DDPEvents {
     - parameter session:    A string session id
     */
     
-    // public var onConnected:         (session:String) -> () = {session in log.info("connected with session: \(session)")}
-    public var onConnected: Completion = Completion { session in log.info("connected with session: \(session)")}
+    // public var onConnected:         (session:String) -> () = {session in print("connected with session: \(session)")}
+    public var onConnected: Completion = Completion { session in print("connected with session: \(session)")}
 
     /**
     onDisconnected executes when the client is disconnected
     */
     
     public var onDisconnected:      () -> () = {
-        log.debug("disconnected")
+        print("disconnected")
         NotificationCenter.default.post(name: Notification.Name(rawValue: DDP_DISCONNECTED), object: nil)
         
     }
@@ -80,7 +80,7 @@ public struct DDPEvents {
     */
     
     public var onFailed:            () -> () = {
-        log.error("failed")
+        print("failed")
         NotificationCenter.default.post(name: Notification.Name(rawValue: DDP_FAILED), object: nil)
     }
     

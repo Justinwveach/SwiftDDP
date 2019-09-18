@@ -292,7 +292,7 @@ extension DDPClient {
                 return
             }
             
-            log.debug("Login error: \(e)")
+            print("Login error: \(e)")
             if let c = callback { c(result, error) }
         }
     }
@@ -374,7 +374,7 @@ extension DDPClient {
                 return
             }
             
-            log.debug("login error: \(e)")
+            print("login error: \(e)")
             if let c = callback { c(result, error) }
         }
     }
@@ -462,7 +462,7 @@ extension DDPClient {
     public func logout(_ callback:DDPMethodCallback?) {
         method("logout", params: nil) { result, error in
                 if let error = error {
-                    log.error("\(error)")
+                    print("\(error)")
                 } else {
                     self.userMainQueue.addOperation() {
                         if let user = self.user(),
@@ -488,11 +488,11 @@ extension DDPClient {
             if let _ = self.user() {
                 if !self.loginWithToken() { result, error in
                     if error == nil {
-                        log.debug("Resumed previous session at launch")
+                        print("Resumed previous session at launch")
                         if let completion = callback { completion() }
                     } else {
                         self.logout()
-                        log.error("\(error)")
+                        print("\(error)")
                         callback?()
                     }
                     }{

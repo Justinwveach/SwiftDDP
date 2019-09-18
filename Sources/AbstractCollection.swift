@@ -20,10 +20,10 @@
 
 import Foundation
 
-open class AbstractCollection: NSObject, MeteorCollectionType {
+public class AbstractCollection: NSObject, MeteorCollectionType {
     
-    open var name:String
-    open let client = Meteor.client
+    public var name:String
+    public let client = Meteor.client
     
     public init(name:String) {
         self.name = name
@@ -43,7 +43,7 @@ open class AbstractCollection: NSObject, MeteorCollectionType {
     - parameter fields:         an optional NSDictionary with the documents properties
     */
     
-    open func documentWasAdded(_ collection:String, id:String, fields:NSDictionary?) {}
+    public func documentWasAdded(_ collection:String, id:String, fields:NSDictionary?) {}
     
     /**
     Invoked when a document has been changed on the server.
@@ -54,7 +54,7 @@ open class AbstractCollection: NSObject, MeteorCollectionType {
     - parameter cleared:                    Optional array of strings (field names to delete)
     */
     
-    open func documentWasChanged(_ collection:String, id:String, fields:NSDictionary?, cleared:[String]?) {}
+    public func documentWasChanged(_ collection:String, id:String, fields:NSDictionary?, cleared:[String]?) {}
     
     /**
     Invoked when a document has been removed on the server.
@@ -63,6 +63,6 @@ open class AbstractCollection: NSObject, MeteorCollectionType {
     - parameter id:             the string unique id that identifies the document on the server
     */
     
-    open func documentWasRemoved(_ collection:String, id:String) {}
+    public func documentWasRemoved(_ collection:String, id:String) {}
     
 }

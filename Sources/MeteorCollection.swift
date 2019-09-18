@@ -45,7 +45,7 @@ MeteorCollection provides basic persistence as well as an api for integrating Sw
 */
 
 // MeteorCollectionType protocol declaration is necessary
-open class MeteorCollection<T:MeteorDocument>: AbstractCollection {
+public class MeteorCollection<T:MeteorDocument>: AbstractCollection {
     
     let collectionSetDidChange = debounce(TimeInterval(0.33), queue: DispatchQueue.main, action: {
         OperationQueue.main.addOperation() {
@@ -55,7 +55,7 @@ open class MeteorCollection<T:MeteorDocument>: AbstractCollection {
     
     var documents = [String:T]()
     
-    open var sorted:[T] {
+    public var sorted:[T] {
         return Array(documents.values).sorted(by: { $0._id > $1._id })
     }
     
@@ -63,7 +63,7 @@ open class MeteorCollection<T:MeteorDocument>: AbstractCollection {
     Returns the number of documents in the collection
     */
     
-    open var count:Int {
+    public var count:Int {
         return documents.count
     }
     
@@ -94,7 +94,7 @@ open class MeteorCollection<T:MeteorDocument>: AbstractCollection {
     - parameter id: the id of the document
     */
     
-    open func findOne(_ id: String) -> T? {
+    public func findOne(_ id: String) -> T? {
         return documents[id]
     }
     
@@ -106,7 +106,7 @@ open class MeteorCollection<T:MeteorDocument>: AbstractCollection {
     - parameter fields:         an optional NSDictionary with the documents properties
     */
     
-    open override func documentWasAdded(_ collection:String, id:String, fields:NSDictionary?) {
+    public override func documentWasAdded(_ collection:String, id:String, fields:NSDictionary?) {
         let document = T(id: id, fields: fields)
         self.documents[id] = document
         collectionSetDidChange()
@@ -121,7 +121,7 @@ open class MeteorCollection<T:MeteorDocument>: AbstractCollection {
     - parameter cleared:                    Optional array of strings (field names to delete)
     */
     
-    open override func documentWasChanged(_ collection:String, id:String, fields:NSDictionary?, cleared:[String]?) {
+    public override func documentWasChanged(_ collection:String, id:String, fields:NSDictionary?, cleared:[String]?) {
         if let document = documents[id] {
             document.update(fields, cleared: cleared)
             self.documents[id] = document
@@ -136,7 +136,7 @@ open class MeteorCollection<T:MeteorDocument>: AbstractCollection {
     - parameter id:             the string unique id that identifies the document on the server
     */
     
-    open override func documentWasRemoved(_ collection:String, id:String) {
+    public override func documentWasRemoved(_ collection:String, id:String) {
         if let _ = documents[id] {
             self.documents[id] = nil
             collectionSetDidChange()
@@ -148,7 +148,7 @@ open class MeteorCollection<T:MeteorDocument>: AbstractCollection {
     
     - parameter document:       a document that inherits from MeteorDocument
     */
-    open func insert(_ document: T) {
+    public func insert(_ document: T) {
         
         documents[document._id] = document
         collectionSetDidChange()
@@ -158,7 +158,7 @@ open class MeteorCollection<T:MeteorDocument>: AbstractCollection {
             if error != nil {
                 self.documents[document._id] = nil
                 self.collectionSetDidChange()
-                log.error("\(error!)")
+                print("\(error!)")
             }
             
         }
@@ -172,7 +172,7 @@ open class MeteorCollection<T:MeteorDocument>: AbstractCollection {
     - parameter operation:      a dictionary containing a Mongo selector and a json object
     */
     
-    open func update(_ document: T, withMongoOperation operation: [String:Any]) {
+    public func update(_ document: T, withMongoOperation operation: [String:Any]) {
         let originalDocument = documents[document._id]
         
         documents[document._id] = document
@@ -183,7 +183,7 @@ open class MeteorCollection<T:MeteorDocument>: AbstractCollection {
             if error != nil {
                 self.documents[document._id] = originalDocument
                 self.collectionSetDidChange()
-                log.error("\(error!)")
+                print("\(error!)")
             }
             
         }
@@ -195,7 +195,7 @@ open class MeteorCollection<T:MeteorDocument>: AbstractCollection {
     
     - parameter document:       a document that inherits from MeteorDocument
     */
-    open func update(_ document: T) {
+    public func update(_ document: T) {
         
         let originalDocument = documents[document._id]
         
@@ -209,7 +209,7 @@ open class MeteorCollection<T:MeteorDocument>: AbstractCollection {
             if error != nil {
                 self.documents[document._id] = originalDocument
                 self.collectionSetDidChange()
-                log.error("\(error!)")
+                print("\(error!)")
             }
             
         }
@@ -221,7 +221,7 @@ open class MeteorCollection<T:MeteorDocument>: AbstractCollection {
     
     - parameter document:       a document that inherits from MeteorDocument
     */
-    open func remove(_ document: T) {
+    public func remove(_ document: T) {
         documents[document._id] = nil
         collectionSetDidChange()
 
@@ -230,7 +230,7 @@ open class MeteorCollection<T:MeteorDocument>: AbstractCollection {
             if error != nil {
                 self.documents[document._id] = document
                 self.collectionSetDidChange()
-                log.error("\(error!)")
+                print("\(error!)")
             }
             
         }
