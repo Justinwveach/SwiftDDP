@@ -70,7 +70,7 @@ extension DDPClient {
     - parameter name:       The name of the subscription
     */
     
-    public func subscribe(_ name:String) -> String { return sub(name, params:nil) }
+    open func subscribe(_ name:String) -> String { return sub(name, params:nil) }
     
     /**
     Sends a subscription request to the server.
@@ -79,7 +79,7 @@ extension DDPClient {
     - parameter params:     An object containing method arguments, if any
     */
     
-    public func subscribe(_ name:String, params:[Any]) -> String { return sub(name, params:params) }
+    open func subscribe(_ name:String, params:[Any]) -> String { return sub(name, params:params) }
     
     /**
     Sends a subscription request to the server. If a callback is passed, the callback asynchronously
@@ -91,7 +91,7 @@ extension DDPClient {
     - parameter callback:   The closure to be executed when the server sends a 'ready' message
     */
     
-    public func subscribe(_ name:String, params:[Any]?, callback: DDPCallback?) -> String { return sub(name, params:params, callback:callback) }
+    open func subscribe(_ name:String, params:[Any]?, callback: DDPCallback?) -> String { return sub(name, params:params, callback:callback) }
     
     /**
     Sends a subscription request to the server. If a callback is passed, the callback asynchronously
@@ -102,7 +102,7 @@ extension DDPClient {
     - parameter callback:   The closure to be executed when the server sends a 'ready' message
     */
     
-    public func subscribe(_ name:String, callback: DDPCallback?) -> String { return sub(name, params:nil, callback:callback) }
+    open func subscribe(_ name:String, callback: DDPCallback?) -> String { return sub(name, params:nil, callback:callback) }
     
     
     /**
@@ -113,7 +113,7 @@ extension DDPClient {
     - parameter callback:   A closure with result and error arguments describing the result of the operation
     */
     
-    @discardableResult public func insert(_ collection: String, document: NSArray, callback: DDPMethodCallback?) -> String {
+    @discardableResult open func insert(_ collection: String, document: NSArray, callback: DDPMethodCallback?) -> String {
         let arg = "/\(collection)/insert"
         return self.method(arg, params: document, callback: callback)
     }
@@ -125,7 +125,7 @@ extension DDPClient {
     - parameter document:   An NSArray of documents to insert
     */
     
-    public func insert(_ collection: String, document: NSArray) -> String {
+    open func insert(_ collection: String, document: NSArray) -> String {
         return insert(collection, document: document, callback:nil)
     }
     
@@ -136,7 +136,7 @@ extension DDPClient {
     - parameter document:   An NSArray of documents to insert
     */
     
-    public func insert(sync collection: String, document: NSArray) -> Result {
+    open func insert(sync collection: String, document: NSArray) -> Result {
         
         syncWarning("Insert")
         
@@ -162,7 +162,7 @@ extension DDPClient {
     - parameter callback:   A closure with result and error arguments describing the result of the operation
     */
     
-    @discardableResult public func update(_ collection: String, document: NSArray, callback: DDPMethodCallback?) -> String {
+    @discardableResult open func update(_ collection: String, document: NSArray, callback: DDPMethodCallback?) -> String {
         let arg = "/\(collection)/update"
         return method(arg, params: document, callback: callback)
     }
@@ -174,7 +174,7 @@ extension DDPClient {
     - parameter document:   An NSArray of documents to update
     */
     
-    public func update(_ collection: String, document: NSArray) -> String {
+    open func update(_ collection: String, document: NSArray) -> String {
         return update(collection, document: document, callback:nil)
     }
     
@@ -185,7 +185,7 @@ extension DDPClient {
     - parameter document:   An NSArray of documents to update
     */
     
-    public func update(sync collection: String, document: NSArray) -> Result {
+    open func update(sync collection: String, document: NSArray) -> Result {
         syncWarning("Update")
         
         let semaphore = DispatchSemaphore(value: 0)
@@ -210,7 +210,7 @@ extension DDPClient {
     - parameter callback:   A closure with result and error arguments describing the result of the operation
     */
     
-    @discardableResult public func remove(_ collection: String, document: NSArray, callback: DDPMethodCallback?) -> String {
+    @discardableResult open func remove(_ collection: String, document: NSArray, callback: DDPMethodCallback?) -> String {
         let arg = "/\(collection)/remove"
         return method(arg, params: document, callback: callback)
     }
@@ -222,7 +222,7 @@ extension DDPClient {
     - parameter document:   An NSArray of documents to remove
     */
     
-    public func remove(_ collection: String, document: NSArray) -> String  {
+    open func remove(_ collection: String, document: NSArray) -> String  {
         return remove(collection, document: document, callback:nil)
     }
     
@@ -233,7 +233,7 @@ extension DDPClient {
     - parameter document:   An NSArray of documents to remove
     */
     
-    public func remove(sync collection: String, document: NSArray) -> Result {
+    open func remove(sync collection: String, document: NSArray) -> Result {
         syncWarning("Remove")
         
         let semaphore = DispatchSemaphore(value: 0)
@@ -251,7 +251,7 @@ extension DDPClient {
     }
     
     // Callback runs on main thread
-    public func login(_ params: NSDictionary, callback: ((_ result: Any?, _ error: DDPError?) -> ())?) {
+    open func login(_ params: NSDictionary, callback: ((_ result: Any?, _ error: DDPError?) -> ())?) {
         
         // method is run on the userBackground queue
         method("login", params: NSArray(arrayLiteral: params)) { result, error in
@@ -305,7 +305,7 @@ extension DDPClient {
     - parameter callback:   A closure with result and error parameters describing the outcome of the operation
     */
     
-    public func loginWithPassword(_ email: String, password: String, callback: DDPMethodCallback?) {
+    open func loginWithPassword(_ email: String, password: String, callback: DDPMethodCallback?) {
         if !(loginWithToken(callback)) {
             let params = ["user": ["email": email], "password":["digest": password.sha256(), "algorithm":"sha-256"]] as NSDictionary
             login(params, callback: callback)
@@ -320,7 +320,7 @@ extension DDPClient {
      - parameter callback:   A closure with result and error parameters describing the outcome of the operation
      */
     
-    public func loginWithUsername(_ username: String, password: String, callback: DDPMethodCallback?) {
+    open func loginWithUsername(_ username: String, password: String, callback: DDPMethodCallback?) {
         if !(loginWithToken(callback)) {
             let params = ["user": ["username": username], "password":["digest": password.sha256(), "algorithm":"sha-256"]] as NSDictionary
             login(params, callback: callback)
@@ -333,7 +333,7 @@ extension DDPClient {
     - parameter callback:   A closure with result and error parameters describing the outcome of the operation
     */
     
-    @discardableResult public func loginWithToken(_ callback: DDPMethodCallback?) -> Bool {
+    @discardableResult open func loginWithToken(_ callback: DDPMethodCallback?) -> Bool {
         if let token = userData.string(forKey: DDP_TOKEN),
             let tokenDate = userData.object(forKey: DDP_TOKEN_EXPIRES) as? Date {
                 print("Found token & token expires \(token), \(tokenDate)")
@@ -347,7 +347,7 @@ extension DDPClient {
     }
     
     
-    public func signup(_ params:NSDictionary, callback:((_ result: Any?, _ error: DDPError?) -> ())?) {
+    open func signup(_ params:NSDictionary, callback:((_ result: Any?, _ error: DDPError?) -> ())?) {
         method("createUser", params: NSArray(arrayLiteral: params)) { result, error in
             guard let e = error, (e.isValid == true) else {
                 
@@ -383,7 +383,7 @@ extension DDPClient {
     
     */
     
-    public func signupWithEmail(_ email: String, password: String, callback: ((_ result:Any?, _ error:DDPError?) -> ())?) {
+    open func signupWithEmail(_ email: String, password: String, callback: ((_ result:Any?, _ error:DDPError?) -> ())?) {
         let params = ["email":email, "password":["digest":password.sha256(), "algorithm":"sha-256"]] as [String : Any]
         signup(params as NSDictionary, callback: callback)
     }
@@ -392,7 +392,7 @@ extension DDPClient {
     Invokes a Meteor method to create a user account with a given email and password, and a NSDictionary containing a user profile
     */
     
-    public func signupWithEmail(_ email: String, password: String, profile: NSDictionary, callback: ((_ result:Any?, _ error:DDPError?) -> ())?) {
+    open func signupWithEmail(_ email: String, password: String, profile: NSDictionary, callback: ((_ result:Any?, _ error:DDPError?) -> ())?) {
         let params = ["email":email, "password":["digest":password.sha256(), "algorithm":"sha-256"], "profile":profile] as [String : Any]
         signup(params as NSDictionary, callback: callback)
     }
@@ -401,7 +401,7 @@ extension DDPClient {
      Invokes a Meteor method to create a user account with a given username, email and password, and a NSDictionary containing a user profile
      */
     
-    public func signupWithUsername(_ username: String, password: String, email: String?, profile: NSDictionary?, callback: ((_ result:Any?, _ error:DDPError?) -> ())?) {
+    open func signupWithUsername(_ username: String, password: String, email: String?, profile: NSDictionary?, callback: ((_ result:Any?, _ error:DDPError?) -> ())?) {
         let params: NSMutableDictionary = ["username":username, "password":["digest":password.sha256(), "algorithm":"sha-256"]]
         if let email = email {
             params.setValue(email, forKey: "email")
@@ -416,7 +416,7 @@ extension DDPClient {
     Returns the client userId, if it exists
     */
     
-    public func userId() -> String? {
+    open func userId() -> String? {
         return self.userData.object(forKey: DDP_ID) as? String
     }
     
@@ -424,7 +424,7 @@ extension DDPClient {
     Returns the client's username or email, if it exists
     */
     
-    public func user() -> String? {
+    open func user() -> String? {
         if let username = self.userData.object(forKey: DDP_USERNAME) as? String {
             return username
         } else if let email = self.userData.object(forKey: DDP_EMAIL) as? String {
@@ -448,7 +448,7 @@ extension DDPClient {
     Logs a user out and removes their account data from NSUserDefaults
     */
 
-    public func logout() {
+    open func logout() {
         logout(nil)
     }
     
@@ -459,7 +459,7 @@ extension DDPClient {
     - parameter callback:   A closure with result and error parameters describing the outcome of the operation
     */
     
-    public func logout(_ callback:DDPMethodCallback?) {
+    open func logout(_ callback:DDPMethodCallback?) {
         method("logout", params: nil) { result, error in
                 if let error = error {
                     print("\(error)")
@@ -483,7 +483,7 @@ extension DDPClient {
     - parameter url:        The server url
     */
     
-    public func resume(_ url:String, callback:DDPCallback?) {
+    open func resume(_ url:String, callback:DDPCallback?) {
         connect(url) { session in
             if let _ = self.user() {
                 if !self.loginWithToken() { result, error in
@@ -525,7 +525,7 @@ extension DDPClient {
     Returns true if the user is logged in, and false otherwise
     */
     
-    public func loggedIn() -> Bool {
+    open func loggedIn() -> Bool {
         if let userLoggedIn = self.userData.object(forKey: DDP_LOGGED_IN) as? Bool, (userLoggedIn == true) {
             return true
         }

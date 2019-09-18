@@ -141,7 +141,7 @@ public class DDPClient: NSObject {
     Creates a random String id
     */
     
-    public func getId() -> String {
+    open func getId() -> String {
         let numbers = Set<Character>(["0","1","2","3","4","5","6","7","8","9"])
         let uuid = UUID().uuidString.replacingOccurrences(of: "-", with: "")
         var id = ""
@@ -162,7 +162,7 @@ public class DDPClient: NSObject {
      - parameter callback:   A closure that takes a String argument with the value of the websocket session token
      */
     
-    public func connect(_ url:String, callback:DDPConnectedCallback?) {
+    open func connect(_ url:String, callback:DDPConnectedCallback?) {
         self.url = url
         // capture the thread context in which the function is called
         let executionQueue = OperationQueue.current
@@ -343,7 +343,7 @@ public class DDPClient: NSObject {
      - parameter callback:   The closure to be executed when the method has been executed
      */
     
-    @discardableResult public func method(_ name: String, params: Any?, callback: DDPMethodCallback?) -> String {
+    @discardableResult open func method(_ name: String, params: Any?, callback: DDPMethodCallback?) -> String {
         let id = getId()
         let message = ["msg":"method", "method":name, "id":id] as NSMutableDictionary
         if let p = params { message["params"] = p }
@@ -393,7 +393,7 @@ public class DDPClient: NSObject {
      - parameter params:     An object containing method arguments, if any
      */
     
-    @discardableResult public func sub(_ name: String, params: [Any]?) -> String {
+    @discardableResult open func sub(_ name: String, params: [Any]?) -> String {
         let id = getId()
         return sub(id, name: name, params: params, callback:nil)
     }
@@ -408,7 +408,7 @@ public class DDPClient: NSObject {
      - parameter callback:   The closure to be executed when the server sends a 'ready' message
      */
     
-    public func sub(_ name:String, params: [Any]?, callback: DDPCallback?) -> String {
+    open func sub(_ name:String, params: [Any]?, callback: DDPCallback?) -> String {
         let id = getId()
         print("Subscribing to ID \(id)")
         return sub(id, name: name, params: params, callback: callback)
@@ -445,7 +445,7 @@ public class DDPClient: NSObject {
      - parameter callback:   The closure to be executed when the server sends a 'ready' message
      */
     
-    public func unsub(withName name: String, callback: DDPCallback?) -> [String] {
+    open func unsub(withName name: String, callback: DDPCallback?) -> [String] {
         
         let unsubgroup = DispatchGroup()
         
@@ -473,7 +473,7 @@ public class DDPClient: NSObject {
      - parameter callback:   The closure to be executed when the server sends a 'ready' message
      */
     
-    public func unsub(withId id: String, callback: DDPCallback?) {
+    open func unsub(withId id: String, callback: DDPCallback?) {
         if let completionCallback = callback {
             let completion = Completion(callback: completionCallback)
             unsubCallbacks[id] = completion
@@ -529,7 +529,7 @@ public class DDPClient: NSObject {
     - parameter subscriptionName:           The name of the subscription
     */
     
-    public func subscriptionIsReady(_ subscriptionId: String, subscriptionName:String) {}
+    open func subscriptionIsReady(_ subscriptionId: String, subscriptionName:String) {}
     
     /**
      Executes when a subscription is removed.
@@ -538,7 +538,7 @@ public class DDPClient: NSObject {
      - parameter subscriptionName:           The name of the subscription
      */
     
-    public func subscriptionWasRemoved(_ subscriptionId:String, subscriptionName:String) {}
+    open func subscriptionWasRemoved(_ subscriptionId:String, subscriptionName:String) {}
     
     
     /**
@@ -549,7 +549,7 @@ public class DDPClient: NSObject {
      - parameter fields:                     The documents properties
      */
     
-    public func documentWasAdded(_ collection:String, id:String, fields:NSDictionary?) {
+    open func documentWasAdded(_ collection:String, id:String, fields:NSDictionary?) {
         if let added = events.onAdded { added(collection, id, fields) }
     }
     
@@ -560,7 +560,7 @@ public class DDPClient: NSObject {
      - parameter id:                         The document's unique id
      */
     
-    public func documentWasRemoved(_ collection:String, id:String) {
+    open func documentWasRemoved(_ collection:String, id:String) {
         if let removed = events.onRemoved { removed(collection, id) }
     }
     
@@ -573,7 +573,7 @@ public class DDPClient: NSObject {
      - parameter cleared:                    Optional array of strings (field names to delete)
      */
     
-    public func documentWasChanged(_ collection:String, id:String, fields:NSDictionary?, cleared:[String]?) {
+    open func documentWasChanged(_ collection:String, id:String, fields:NSDictionary?, cleared:[String]?) {
         if let changed = events.onChanged { changed(collection, id, fields, cleared as NSArray?) }
     }
     
@@ -583,7 +583,7 @@ public class DDPClient: NSObject {
      - parameter methods:                    An array of strings (ids passed to 'method', all of whose writes have been reflected in data messages)
      */
     
-    public func methodWasUpdated(_ methods:[String]) {
+    open func methodWasUpdated(_ methods:[String]) {
         if let updated = events.onUpdated { updated(methods) }
     }
     
@@ -593,7 +593,7 @@ public class DDPClient: NSObject {
      - parameter message:                    A DDPError object with information about the error
      */
     
-    public func didReceiveErrorMessage(_ message: DDPError) {
+    open func didReceiveErrorMessage(_ message: DDPError) {
         if let error = events.onError { error(message) }
     }
 }

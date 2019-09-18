@@ -36,7 +36,7 @@ open class MeteorDocument: NSObject {
         }
     }
     
-    public func update(_ fields: NSDictionary?, cleared: [String]?) {
+    open func update(_ fields: NSDictionary?, cleared: [String]?) {
         if let properties = fields {
             for (key,value) in properties  {
                 print("Key: \(key), Value: \(value)")
@@ -59,7 +59,7 @@ open class MeteorDocument: NSObject {
     see http://stackoverflow.com/questions/24844681/list-of-classs-properties-in-swift
     */
     
-    public func propertyNames() -> [String] {
+    open func propertyNames() -> [String] {
         return Mirror(reflecting: self).children.filter { $0.label != nil }.map { $0.label! }
     }
 
@@ -67,7 +67,7 @@ open class MeteorDocument: NSObject {
     /*
     This method should be public so users of this library can override it for parsing their variables in their MeteorDocument object when having structs and such in their Document.
     */
-    public func fields() -> NSDictionary {
+    open func fields() -> NSDictionary {
         let fieldsDict = NSMutableDictionary()
         let properties = propertyNames()
         

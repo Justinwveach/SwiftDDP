@@ -94,7 +94,7 @@ public class MeteorCollection<T:MeteorDocument>: AbstractCollection {
     - parameter id: the id of the document
     */
     
-    public func findOne(_ id: String) -> T? {
+    open func findOne(_ id: String) -> T? {
         return documents[id]
     }
     
@@ -148,7 +148,7 @@ public class MeteorCollection<T:MeteorDocument>: AbstractCollection {
     
     - parameter document:       a document that inherits from MeteorDocument
     */
-    public func insert(_ document: T) {
+    open func insert(_ document: T) {
         
         documents[document._id] = document
         collectionSetDidChange()
@@ -172,7 +172,7 @@ public class MeteorCollection<T:MeteorDocument>: AbstractCollection {
     - parameter operation:      a dictionary containing a Mongo selector and a json object
     */
     
-    public func update(_ document: T, withMongoOperation operation: [String:Any]) {
+    open func update(_ document: T, withMongoOperation operation: [String:Any]) {
         let originalDocument = documents[document._id]
         
         documents[document._id] = document
@@ -195,7 +195,7 @@ public class MeteorCollection<T:MeteorDocument>: AbstractCollection {
     
     - parameter document:       a document that inherits from MeteorDocument
     */
-    public func update(_ document: T) {
+    open func update(_ document: T) {
         
         let originalDocument = documents[document._id]
         
@@ -221,7 +221,7 @@ public class MeteorCollection<T:MeteorDocument>: AbstractCollection {
     
     - parameter document:       a document that inherits from MeteorDocument
     */
-    public func remove(_ document: T) {
+    open func remove(_ document: T) {
         documents[document._id] = nil
         collectionSetDidChange()
 
